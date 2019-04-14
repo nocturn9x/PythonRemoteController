@@ -73,6 +73,6 @@ class Main :
 
 
 if __name__ == "__main__":
-    addr = Main("XXX.XX.XX.XX",52000)
+    addr = Main("151.62.201.245",52000)
     Main.connect_server(addr)
 
