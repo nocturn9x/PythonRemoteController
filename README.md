@@ -6,19 +6,11 @@ Python 3.6.x o superiore
 
 Le seguenti librerie esterne installate : 
 
-- asn1crypto==0.24.0
-
-- cffi==1.12.2
-
 - cryptography==2.6.1
-
-- pycparser==2.19
 
 - pyftpdlib==1.5.5
 
 - pyOpenSSL==19.0.0
-
-- six==1.12.0
 
 - termcolor==1.1.0
 
