@@ -185,7 +185,7 @@ class FTP:
         handler.authorizer = authorizer
         handler.tls_control_required = True
         handler.tls_data_required = True
-        handler.masquerade_address = '151.62.201.245' # Inserisci qui il tuo IP pubblico. Serve alla modalità PASV
+        handler.masquerade_address = 'XXX.XXX.XX.XX' # Inserisci qui il tuo IP pubblico. Serve alla modalità PASV
         handler.passive_ports = range(2122,2124) # Porte passive
         handler.banner = self.banner
         address = (self.address,self.port)
@@ -196,8 +196,8 @@ class FTP:
 
 if __name__ == "__main__":
     # Istanzio un oggetto TCP ed un oggetto FTP, poi avvio i Threads
-    TCP = TCP("192.168.1.103",52000,backlog=5) # Inserisci qui il tuo IP locale
-    FTP = FTP("192.168.1.103",2121,"Mattia Giambirtone","Password1971_","Benvenuto!") # Inserisci il tuo IP locale
+    TCP = TCP("XXX.XXX.XX.XX",52000,backlog=5) # Inserisci qui il tuo IP locale
+    FTP = FTP("XXX.XXX.XX.XX",2121,"Mattia Giambirtone","Password1971_","Benvenuto!") # Inserisci il tuo IP locale
     thread1 = Thread(target=FTP.run, args=(FTP,), name="FTP")
     thread2 = Thread(target=TCP.run,args=(TCP,),name="TCP")
     thread1.start()
