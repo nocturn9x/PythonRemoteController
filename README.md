@@ -44,7 +44,7 @@ Enjoy :)
 
 Vorrei ringraziare particolarmente :
 
-- Enkidu -> Per le sue **furiose**, ma costruttive, critiche
+- Enkidu -> Per le sue **furiose**, ma costruttive, critich. Fate un salto sul suo profilo GitHub --> GitHub.com/webdiamond
 
 - Muflone -> Per avermi fatto capire cosa è e cosa non è OOP, oltre a molto aiuto tecnico
 
