@@ -67,4 +67,5 @@ Vorrei ringraziare particolarmente :
 
 **Per qualsiasi problema, dubbi e/o domande** -> Contatta https://telegram.me/isgiambyy o via e-mail a hackhab@gmail.com
 
+**Attenzione** Le pull requests, suggerimenti di modifica per migliorare il codice, sono sempre ben accette!
 
