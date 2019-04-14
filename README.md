@@ -33,15 +33,20 @@ Prima di avviare il server è necessario generare un certificato di sicurezza tr
 Inserisci il file di certificato nella cartella cert, rinominandolo certfile.pem, e nella stessa cartella il file della chiave privata, rinominandolo key.pem; Se hai completato tutti i passi correttamente, puoi eseguire server.py .
 Partirà il server TCP per l'esecuzione di comandi e contemporaneamente il server FTP over TLS. Il server mostrerà a schermo la chiave crittografica di sessione, dovrai inserirla nel client prima di connetterti al server per permettere una comunicazione sicura tra il server e il client.
 
-**N.B.** Nella repository sono già presenti una chiave privata ed un certificato di esempio, ma è **vivamente sconsigliato utilizzarli** in quanto si perderebbe il senso di utilizzare una connessione TLS.
+**N.B. 2** Nella repository sono già presenti una chiave privata ed un certificato di esempio, ma è **vivamente sconsigliato utilizzarli** in quanto si perderebbe il senso di utilizzare una connessione TLS.
 
-**Per qualsiasi problema, dubbi e/o domande** -> Contatta https://telegram.me/isgiambyy
 
-# Nota Bene 
+# Importante
 
 Tutte le informazioni trasmesse da e verso il client/server sono crittografate secondo altissimi standard di sicurezza, al fine di prevenire attacchi di tipo MITM (Man In The Middle).
 
-**N.B. 2** I più attenti fra voi avranno notato che questo software assomiglia molto ad un RAT (Remote Administration Tool).
+Le informazioni trasmesse attraverso il protocollo di rete TCP sono crittografate tramite l'algoritmo AES Fernet a chiave simmetrica.
+
+Le informazioni trasmesse attraverso il protocollo FTP sono crittografate tramite un certificato Secure Socket Layer e il protocollo di crittografia TLS 1.3 .
+
+Il programma è in versione alpha, quindi non è privo di errori e/o bug ed è distribuito senza alcuna garanzia (Per maggiori informazioni consulta la licenza allegata al software). Nel caso dovessi riscontrare qualche errore, per favore, contatta lo sviluppatore perchè possa risolverlo! Trovi il suo contatto in fondo al documento.
+
+**N.B. 3** I più attenti fra voi avranno notato che questo software assomiglia molto ad un RAT (Remote Administration Tool).
 Sappiate che non mi assumo nessuna responsabilità per l'uso che farete del codice in questa repository e che comunque l'uso di questo programma è condizionato dalla licenza scaricabile insieme allo stesso.
 
 Questo programma era **solo** un modo per testare le mie potenzialità e impiegare molto tempo libero.
@@ -56,9 +61,10 @@ Vorrei ringraziare particolarmente :
 
 - Muflone -> Per avermi fatto capire cosa è e cosa non è OOP, oltre a molto aiuto tecnico. Toh, anche lui ha GitHub --> https://github.com/muflone
 
-- Vympel -> Per il prezioso aiuto con i primi test del programma
+- Vympel -> Per il prezioso aiuto con i primi test del programma. Indovina un po'? Anche lui ha GitHub! --> https://github.com/vympel7
 
 - Tutta la community di Python Italia -> Il vostro supporto è sempre fondamentale!
 
+**Per qualsiasi problema, dubbi e/o domande** -> Contatta https://telegram.me/isgiambyy o via e-mail a hackhab@gmail.com
 
 
