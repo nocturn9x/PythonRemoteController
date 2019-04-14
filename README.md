@@ -27,7 +27,7 @@ Per maggiori informazioni consulta il manuale d'uso del tuo router.
 
 **N.B.** Se hai molte regole di port forwarding personalizzate, potrebbe essere una buona idea dare alle regole appena create un nome appropriato del tipo "Python Server" .
 
-**Passo 3:** Una volta scaricato il programma, assicurati che tutti i file siano nella stessa cartella e modifica il file main.py, inserendo, alla fine del file, al posto di XXX.XXX.XXX.XX il tuo ip locale e sostituisci l'indirizzo dentro la classe FTP con il tuo IP pubblico; contemporaneamente sostituisci l'ip dentro client.py con il tuo IP pubblico.
+**Passo 3:** Una volta scaricato il programma, assicurati che tutti i file siano nella stessa cartella e modifica il file server.py, inserendo, alla fine del file, al posto di XXX.XXX.XXX.XX il tuo ip locale e sostituisci l'indirizzo dentro la classe FTP con il tuo IP pubblico; contemporaneamente sostituisci l'ip dentro client.py con il tuo IP pubblico.
 Prima di avviare il server è necessario generare un certificato di sicurezza tramite openssl, puoi trovare una guida dettagliata su come fare al link http://www.megalab.it/7090/come-generare-certificati-digitali-con-openssl-windows-e-linux.
 
 Inserisci il file di certificato nella cartella cert, rinominandolo certfile.pem, e nella stessa cartella il file della chiave privata, rinominandolo key.pem; Se hai completato tutti i passi correttamente, puoi eseguire server.py .
