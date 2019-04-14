@@ -38,6 +38,11 @@ Partirà il server TCP per l'esecuzione di comandi e contemporaneamente il serve
 
 Tutte le informazioni trasmesse da e verso il client/server sono crittografate secondo altissimi standard di sicurezza, al fine di prevenire attacchi di tipo MITM (Man In The Middle).
 
+**N.B. 2** I più attenti fra voi avranno notato che questo software assomiglia molto ad un RAT (Remote Administration Tool).
+Sappiate che non mi assumo nessuna responsabilità per l'uso che farete del codice in questa repository e che comunque l'uso di questo programma è condizionato dalla licenza scaricabile insieme allo stesso.
+
+Questo programma era **solo** un modo per testare le mie potenzialità e impiegare molto tempo libero.
+
 Enjoy :)
 
 # Crediti & Menzioni Onorevoli
