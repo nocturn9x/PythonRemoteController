@@ -46,7 +46,7 @@ Vorrei ringraziare particolarmente :
 
 - Enkidu -> Per le sue **furiose**, ma costruttive, critich. Fate un salto sul suo profilo GitHub --> https://github.com/webdiamond
 
-- Muflone -> Per avermi fatto capire cosa è e cosa non è OOP, oltre a molto aiuto tecnico
+- Muflone -> Per avermi fatto capire cosa è e cosa non è OOP, oltre a molto aiuto tecnico. Toh, anche lui ha GitHub --> https://github.com/muflone
 
 - Vympel -> Per il prezioso aiuto con i primi test del programma
 
