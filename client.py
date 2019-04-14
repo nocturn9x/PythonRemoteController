@@ -73,6 +73,6 @@ class Main :
 
 
 if __name__ == "__main__":
-    addr = Main("XXX.XXX.XX.X",52000) #Inserisci qui il tuo IP locale
+    addr = Main("XXX.XXX.XX.X",52000) #Inserisci qui il tuo IP pubblico
     Main.connect_server(addr)
 
