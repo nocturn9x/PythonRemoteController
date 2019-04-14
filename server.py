@@ -46,7 +46,7 @@ class TCP:
             pass
         while True:
             try:
-                comando = conn.recv(4096)
+                comando = conn.recv()
                 decode = key.decrypt(comando)  # Ricevo comandi dal client e li decrittografo Poi li decodifico in ASCII
                 decoded = decode.decode("ascii")
             except ConnectionResetError:
