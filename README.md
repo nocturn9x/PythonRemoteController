@@ -29,6 +29,7 @@ Per maggiori informazioni consulta il manuale d'uso del tuo router.
 
 **Passo 3:** Una volta scaricato il programma, assicurati che tutti i file siano nella stessa cartella e modifica il file main.py, inserendo, alla fine del file, al posto di XXX.XXX.XXX.XX il tuo ip locale e sostituisci l'indirizzo dentro la classe FTP con il tuo IP pubblico; contemporaneamente sostituisci l'ip dentro client.py con il tuo IP pubblico.
 Prima di avviare il server è necessario generare un certificato di sicurezza tramite openssl, puoi trovare una guida dettagliata su come fare al link http://www.megalab.it/7090/come-generare-certificati-digitali-con-openssl-windows-e-linux.
+Nella repository sono già presenti una chiave privata ed un certificato di esempio, ma è **vivamente sconsigliato utilizzarli** in quanto si perderebbe il senso di utilizzare una connessione TLS.
 Inserisci il file di certificato nella cartella cert, rinominandolo certfile.pem, e nella stessa cartella il file della chiave privata, rinominandolo key.pem; Se hai completato tutti i passi correttamente, puoi eseguire server.py .
 Partirà il server TCP per l'esecuzione di comandi e contemporaneamente il server FTP over TLS. Il server mostrerà a schermo la chiave crittografica di sessione, dovrai inserirla nel client prima di connetterti al server per permettere una comunicazione sicura tra il server e il client.
 
