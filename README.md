@@ -39,3 +39,18 @@ Partirà il server TCP per l'esecuzione di comandi e contemporaneamente il serve
 Tutte le informazioni trasmesse da e verso il client/server sono crittografate secondo altissimi standard di sicurezza, al fine di prevenire attacchi di tipo MITM (Man In The Middle).
 
 Enjoy :)
+
+# Crediti & Menzioni Onorevoli
+
+Vorrei ringraziare particolarmente :
+
+- Enkidu -> Per le sue **furiose**, ma costruttive, critiche
+
+- Muflone -> Per avermi fatto capire cosa è e cosa non è OOP, oltre a molto aiuto tecnico
+
+- Vympel -> Per il prezioso aiuto con i primi test del programma
+
+- Tutta la community di Python Italia -> Il vostro supporto è sempre fondamentale!
+
+
+
