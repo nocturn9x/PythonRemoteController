@@ -95,7 +95,7 @@ class TCP:
                         deleted_dir = b'Directory Eliminata'
                         conn.send(key.encrypt(deleted_dir))
                     elif rmdir == 256:
-                        err_256_1 = f'rmdir: {decoded[6:]} non è una directory oppure non esiste!'
+                        err_256_1 = f'rmdir: {decoded[6:]} non è una directory vuota oppure non esiste!'
                         conn.send(key.encrypt(err_256_1.encode()))
                 except BrokenPipeError:
                     pass
