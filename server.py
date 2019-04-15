@@ -17,126 +17,124 @@ import cryptography.fernet
 
 class TCP:
 
-    def __init__(self,address,port,backlog=1):
+    def __init__(self, address, port, backlog=1):
         self.address = address
         self.port = port
         self.backlog = backlog
 
     @staticmethod
     def clock():
-       '''Aggiorna l'orologio interno'''
-       clock = time.strftime("%d/%m/%y %H:%M:%S")
-       return clock
+        """Aggiorna l'orologio interno del server"""
+        clock = time.strftime('%d/%m/%y %H:%M:%S')
+        return clock
 
-    def command_parser(self,conn,indirizzo_client,chiave,show_message=True):
+    @staticmethod
+    def command_parser(conn, client_address, chiave, show_message=True):
         """Funzione che si occupa di ricevere i comandi dal client
         decrittografarli, poi eseguirli e restituire al client l'output criptato."""
         hostname = socket.gethostname()
         username = getpass.getuser()
         key = Fernet(chiave)    # Istanzio l'oggetto Fernet
         try:
-            user_and_host = f"internal1:{hostname}:internal2:{username}"    # Comunico l'username e l'hostname al client
+            user_and_host = f'internal1:{hostname}:internal2:{username}'   # Comunico l'username e l'hostname al client
             conn.send(key.encrypt(user_and_host.encode()))
-        except BrokenPipeError: # In caso di disconnessione anomala, catturo l'eccezione e la ignoro
+        except BrokenPipeError:  # In caso di disconnessione anomala, catturo l'eccezione e la ignoro
             pass
-        cprint(f"[{TCP.clock()} Info - TCP Server] Hey, non vorrei mica disturbarti, ma qualcuno si è connesso! Indirizzo : {indirizzo_client[0]} Porta remota : {indirizzo_client[1]}", "green")
+        cprint(f'[{TCP.clock()} Info - TCP Server] Qualcuno si è connesso! Indirizzo -> {client_address[0]}:{client_address[1]}', 'green')
         if show_message is True:
-            cprint(f"[{TCP.clock()} Info - Command Parser] Heylà giovine, il command parser è avviato!","blue")
+            cprint(f'[{TCP.clock()} Info - Command Parser] Command parser per {client_address[0]}:{client_address[1]} avviato!', 'blue')
         else:
             pass
         while True:
             try:
-                comando = conn.recv()
-                decode = key.decrypt(comando)  # Ricevo comandi dal client e li decrittografo Poi li decodifico in ASCII
-                decoded = decode.decode("ascii")
+                command = conn.recv()
+                decrypted = key.decrypt(command)  # Ricevo comandi dal client, li decrittografo e li decodifico in ASCII
+                decoded = decrypted.decode("ascii")
             except ConnectionResetError:
-                cprint(f"[{TCP.clock()} Info - TCP Server] L'utente {indirizzo_client[0]}:{indirizzo_client[1]} si è disconnesso", "green")
+                cprint(f'[{TCP.clock()} Info - TCP Server] {client_address[0]}:{client_address[1]} si è disconnesso', 'green')
                 break
             except cryptography.fernet.InvalidToken:
-                cprint(f"[{TCP.clock()} Info - TCP Server] L'utente {indirizzo_client[0]}:{indirizzo_client[1]} si è disconnesso", "green")
+                cprint(f'[{TCP.clock()} Info - TCP Server] {client_address[0]}:{client_address[1]} si è disconnesso', 'green')
                 break
-            if decoded.startswith("cd "):
+            if decoded.startswith('cd '):
                 os.chdir(decoded[3:])
                 try:
-                    dir_modificata = b'Directory corrente modificata'
-                    conn.send(key.encrypt(dir_modificata))
+                    dir_changed = b'Directory corrente modificata'
+                    conn.send(key.encrypt(dir_changed))
                 except BrokenPipeError:
                     pass
-            elif decoded.startswith("touch "):
-                os.system(f"touch {decoded[6:]}")       # Verifico i comandi che non restituiscono output
+            elif decoded.startswith('touch '):
+                os.system(f'touch {decoded[6:]} >/dev/null 2>&1')      # Verifico i comandi che non restituiscono output
                 try:
-                    file_creato = b'File Creato'
-                    conn.send(key.encrypt(file_creato))
+                    file_created = b'File Creato'
+                    conn.send(key.encrypt(file_created))
                 except BrokenPipeError:
                     pass
-            elif decoded.startswith("mkdir "):
-                os.system(f"mkdir {decoded[6:]}")
+            elif decoded.startswith('mkdir '):
+                os.system(f'mkdir {decoded[6:]} >/dev/null 2>&1')
                 try:
-                    directory_creata = b'Directory creata'
-                    conn.send(key.encrypt(directory_creata))
+                    directory_created = b'Directory creata'
+                    conn.send(key.encrypt(directory_created))
                 except BrokenPipeError:
                     pass
-            elif decoded.startswith("rm "):
+            elif decoded.startswith('rm '):
                 try:
-                    rm = os.system(f"rm {decoded[3:]}")
+                    rm = os.system(f'rm {decoded[3:]} >/dev/null 2>&1')
                     if rm == 0:
                         deleted_file = b'File eliminato'
                         conn.send(key.encrypt(deleted_file))
                     elif rm == 256:
-                        err_256_plain = f"rm: {decoded[3:]}: è una directory o non esiste!"
+                        err_256_plain = f'rm: {decoded[3:]}: è una directory o non esiste!'
                         err_256 = err_256_plain.encode()
                         conn.send(key.encrypt(err_256))
                 except BrokenPipeError:
                     pass
-            elif decoded.startswith("rmdir "):
-                try :
-                    rmdir = os.system(f"rmdir {decoded[6:]}")
+            elif decoded.startswith('rmdir '):
+                try:
+                    rmdir = os.system(f'rmdir {decoded[6:]} >/dev/null 2>&1')
                     if rmdir == 0:
                         deleted_dir = b'Directory Eliminata'
                         conn.send(key.encrypt(deleted_dir))
                     elif rmdir == 256:
-                        err_256_1 = f'rmdir: {decoded[6:]} non è una directory vuota oppure non esiste!'
+                        err_256_1 = f'rmdir: {decoded[6:]} non è una directory oppure non esiste!'
                         conn.send(key.encrypt(err_256_1.encode()))
                 except BrokenPipeError:
                     pass
-            elif decoded == "ESC":
-                    cprint(f"[{TCP.clock()} Info - TCP Server] L'utente {indirizzo_client[0]}:{indirizzo_client[1]} si è disconnesso", "green")
+            elif decoded == 'ESC':
+                    cprint(f'[{TCP.clock()} Info - TCP Server] {client_address[0]}:{client_address[1]} si è disconnesso', 'green')
                     break
-            else :
-                try :
+            else:
+                try:
                     # Non è nessuno dei comandi sopra? Eseguo un sottoprocesso e invio l'output cifrato
-                    cmd = subprocess.run(decode,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-                    tosend = cmd.stdout + cmd.stderr
-                    conn.send(key.encrypt(tosend))
-                    if len(tosend.decode()) <= 0:           # Nessun Output? Invia \n
+                    cmd = subprocess.run(decoded, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                    to_send = cmd.stdout + cmd.stderr
+                    conn.send(key.encrypt(to_send))
+                    if len(to_send.decode()) <= 0:           # Nessun Output? Invia \n
                         newline = "\n"
                         conn.send(key.encrypt(newline.encode()))
-                except BrokenPipeError :
+                except BrokenPipeError:
                     pass
 
-
-    def restart(self,addr,backlog):
+    @staticmethod
+    def restart(address, backlog):
         """Funzione analoga a run(), eseguita come tentativo di riavvio del server"""
-        try :
+        try:
             s = socket.socket()
-            s.bind(addr)
+            s.bind(address)
             s.listen(backlog)
-            hostname = socket.gethostname()
-            username = getpass.getuser()
-        except Exception as errore :
-            cprint(f"[{TCP.clock()} Errore - TCP Server] Sembra proprio che ci sia qualcosa di sbagliato nella configurazione del server TCP, controlla l'indirizzo e la porta e riprova. Errore completo : {errore}","red")
+        except Exception as error:
+            cprint(f'[{TCP.clock()} Errore - TCP Server] Qualcosa non va con il server TCP. Controlla indirizzo e porta e riprova. Errore completo : {error}','red')
             sys.exit(1)
         try:
-            chiave = Fernet.generate_key()
-            cipher_suite = Fernet(chiave)
-            str_key = chiave.decode("utf-8")
-        except Exception as exc:
-            cprint(f"[{TCP.clock()} Errore - TCP Server] Qualcosa è andato storto con la generazione della chiave crittografica. Stacktrace completo : {exc}","red")
-        cprint(f"[{TCP.clock()} Info - TCP Server] La chiave crittografica di questa sessione è {str_key}","green")
+            key = Fernet.generate_key()
+            str_key = key.decode("ascii")
+        except socket.error as exc:
+            cprint(f'[{TCP.clock()} Errore - TCP Server] Errore durante la generazione della chiave crittografica : {exc}','red')
+        cprint(f'[{TCP.clock()} Info - TCP Server] La chiave crittografica di questa sessione è {str_key}','green')
         while True:
-            connessione, indirizzo_client = s.accept()
-            thread1 = Thread(target=TCP.command_parser(connessione, indirizzo_client,str_key))
-            thread1.start()
+            connection, client_address = s.accept()
+            command_thread = Thread(target=TCP.command_parser(connection, client_address, str_key), name="PARSER")
+            command_thread.start()
 
 
 
@@ -147,27 +145,27 @@ class TCP:
                 s = socket.socket()
                 s.bind((self.address, self.port))
                 s.listen(self.backlog)
-            except Exception as errore:
-                cprint(f"[{TCP.clock()} Errore - TCP Server] Accipicchia! Si è verificato un errore durante la creazione del socket, eccoti l'errore completo : {errore}","red")
-                cprint(f"[{TCP.clock()} Info - TCP Server] Tento il Riavvio...", "green")
-                TCP.restart((self.address,self.port),self.backlog)
-            cprint(f"[{TCP.clock()} Info - TCP Server] Hey, sembra proprio che sia riuscito ad avviarmi correttamente","green")
+            except Exception as error:
+                cprint(f'[{TCP.clock()} Errore - TCP Server] Si è verificato un errore durante la creazione del socket, errore completo : {error}', 'red')
+                cprint(f'[{TCP.clock()} Info - TCP Server] Tento il Riavvio...', 'green')
+                TCP.restart((self.address, self.port), self.backlog)
+            cprint(f'[{TCP.clock()} Info - TCP Server] Avvio completato', 'green')
             try:
-                chiave = Fernet.generate_key()              # Genera la chiave crittografica AES Fernet
-                str_key = chiave.decode("utf-8")
-            except Exception as exc:
-                cprint(f"[{TCP.clock()} Errore - TCP Server] Qualcosa è andato storto con la generazione della chiave crittografica. Stacktrace completo : {exc}","red")
-            cprint(f"[{TCP.clock()} Info - TCP Server] La chiave crittografica di questa sessione è {str_key}","green")
+                key = Fernet.generate_key()              # Genera la chiave crittografica AES Fernet
+                str_key = key.decode("ascii")
+            except socket.error as exc:
+                cprint(f'[{TCP.clock()} Errore - TCP Server] Errore durante la generazione della chiave crittografica. Errore completo : {exc}', 'red')
+            cprint(f'[{TCP.clock()} Info - TCP Server] La chiave crittografica di questa sessione è {str_key}', 'green')
             while True:
-                connessione, indirizzo_client = s.accept()
-                thread1 = Thread(target=TCP.command_parser,args=(connessione,indirizzo_client,chiave),name="CMD-PARSER")
-                thread1.start()
+                connection, client_address = s.accept()
+                command_thread = Thread(target=TCP.command_parser, args=(connection, client_address, key), name="PARSER")
+                command_thread.start()
 
 
 # Classe FTP Server
 class FTP:
 
-    def __init__(self,address,port,user,pasw,banner):
+    def __init__(self, address, port, user, pasw, banner):
         self.address = address
         self.port = port
         self.user = user
@@ -175,30 +173,34 @@ class FTP:
         self.banner = banner
 
 # Server FTP con certificato SSL
-    def run(self,*args):
+    def run(self, *args):
         """Avvio il server FTP"""
         authorizer = DummyAuthorizer()
-        authorizer.add_user(self.user, self.pasw, f'{os.getcwd()}', perm='elradfmwMT') # Aggiunge un utente virtuale
+        authorizer.add_user(self.user, self.pasw, f'{os.getcwd()}', perm='elradfmwMT')  # Aggiunge un utente virtuale
         handler = TLS_FTPHandler
-        handler.certfile = f'{os.getcwd()}/cert/certfile.pem' # Directory del certificato
+        handler.certfile = f'{os.getcwd()}/cert/certfile.pem'  # Directory del certificato
         handler.keyfile = f'{os.getcwd()}/cert/key.pem'     # Directory della chiave
         handler.authorizer = authorizer
         handler.tls_control_required = True
         handler.tls_data_required = True
-        handler.masquerade_address = 'XXX.XXX.XX.XX' # Inserisci qui il tuo IP pubblico. Serve alla modalità PASV
-        handler.passive_ports = range(2122,2124) # Porte passive
+        handler.masquerade_address = 'XXX.XX.XX.X'  # Inserisci qui il tuo IP pubblico. Serve alla modalità PASV
+        handler.passive_ports = range(2122, 2124)  # Porte passive
         handler.banner = self.banner
-        address = (self.address,self.port)
+        address = (self.address, self.port)
         server = FTPServer(address, handler)
         server.max_cons = 20
         server.max_cons_per_ip = 2
-        server.serve_forever()
+        try:
+            server.serve_forever()
+        except Exception as exc:
+            cprint(f'[{TCP.clock()} Errore - FTP Server] Errore nel server FTP -> {exc}', 'red')
+
 
 if __name__ == "__main__":
     # Istanzio un oggetto TCP ed un oggetto FTP, poi avvio i Threads
-    TCP = TCP("XXX.XXX.XX.XX",52000,backlog=5) # Inserisci qui il tuo IP locale
-    FTP = FTP("XXX.XXX.XX.XX",2121,"Mattia Giambirtone","Password1971_","Benvenuto!") # Inserisci il tuo IP locale
-    thread1 = Thread(target=FTP.run, args=(FTP,), name="FTP")
-    thread2 = Thread(target=TCP.run,args=(TCP,),name="TCP")
-    thread1.start()
-    thread2.start()
+    TCP = TCP("XXX.XX.XX.X", 52000, backlog=5)  # Inserisci qui il tuo IP locale
+    FTP = FTP("XXX.XX.XX.X", 2121, "Mattia Giambirtone", "Password1971_", "Benvenuto!")  # Inserisci il tuo IP locale
+    TCP_Thread = Thread(target=FTP.run, args=(FTP,), name="FTP")
+    FTP_Thread = Thread(target=TCP.run, args=(TCP,), name="TCP")
+    TCP_Thread.start()
+    FTP_Thread.start()
