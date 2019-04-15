@@ -54,6 +54,8 @@ Questo programma era **solo** un modo per testare le mie potenzialità e impiega
 **N.B. 4** I comandi come sudo e login, che quindi richiedono in input nome utente e/o password, non sono ancora supportati.
 Verranno aggiunti in una futura release, se possibile.
 
+**N.B. 5** A breve sarà implementata la possibilità di aprire le porte del router automaticamente dal programma stesso, previa richiesta all'utente, in modo da semplificare la configurazione del server.
+
 Enjoy :)
 
 # Crediti & Menzioni Onorevoli
