@@ -16,7 +16,7 @@ class Main :
     def invia_comandi(s,chiave): #Invia e riceve i comandi crittografati
         try :
             fernet = Fernet(chiave)
-            user_and_host = s.recv()
+            user_and_host = s.recv(4096)
             user_and_host_decrypted = fernet.decrypt(user_and_host) # Riceve e decripta hostname/username della macchina remota
             split = user_and_host_decrypted.decode("utf-8").split(":")
             hostname = split[1]
@@ -43,7 +43,7 @@ class Main :
                         os.system("cls")
                 else :
                     s.send(fernet.encrypt(comando.encode())) # Invio l'input criptato
-                    data = s.recv(4096)     # Ricevo l'output
+                    data = s.recv(16384)     # Ricevo l'output
                     toprint = fernet.decrypt(data)  # Decodifico l'oggetto byte ricevuto
                     print(toprint.decode())         # Stampo a video la stringa decodificata
             except KeyboardInterrupt : # Ctrl+C? Esco...
