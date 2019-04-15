@@ -18,7 +18,7 @@ Le seguenti librerie esterne installate :
 
 # Istruzioni per l'uso
 
-**Passo 1 :** Installa le librerie necessarie con il comando 'pip install nomemodulo==versione'. Puoi trovare le librerie richieste per il programma nella sezione **Requirements**
+**Passo 1 :** Installa le librerie necessarie con il comando *'pip install nomemodulo==versione'*. Puoi trovare le librerie richieste per il programma nella sezione **Requirements**
   
 Se non l'hai già fatto, apri le porte del tuo router perchè sia raggiungibile dall'esterno. Digita nella barra degli indirizzi '192.168.1.1' e dovresti trovarti di fronte ad una schermata di login. Se vedi direttamente il pannello di amministrazione della tua rete locale, salta al **Passo 2**, altrimenti prosegui nel **Passo 1**. Se non hai mai effettuato l'accesso al pannello di amministrazione del tuo router le credenziali di accesso saranno , generalmente, username=admin e password=admin.
 Per maggiori informazioni consulta il manuale d'uso del tuo router.
@@ -58,6 +58,8 @@ Questo programma era **solo** un modo per testare le mie potenzialità e impiega
 Verranno aggiunti in una futura release, se possibile.
 
 **N.B. 5** A breve sarà implementata la possibilità di aprire le porte del router automaticamente dal programma stesso, previa richiesta all'utente, in modo da semplificare la configurazione del server.
+
+**N.B. 6** Per avere tutti i permessi di lettura/scrittura è consigliabile eseguire lo script python come super utente (super-user) tramite il comando *sudo python server.py*. Una volta inserita la password di utente amministratore il programma si avvierà normalmente
 
 Enjoy :)
 
