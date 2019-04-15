@@ -51,6 +51,9 @@ Sappiate che non mi assumo nessuna responsabilità per l'uso che farete del codi
 
 Questo programma era **solo** un modo per testare le mie potenzialità e impiegare molto tempo libero.
 
+**N.B. 4** I comandi come sudo e login, che quindi richiedono in input nome utente e/o password, non sono ancora supportati.
+Verranno aggiunti in una futura release, se possibile.
+
 Enjoy :)
 
 # Crediti & Menzioni Onorevoli
