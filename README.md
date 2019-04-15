@@ -31,7 +31,10 @@ Per maggiori informazioni consulta il manuale d'uso del tuo router.
 Prima di avviare il server è necessario generare un certificato di sicurezza tramite openssl, puoi trovare una guida dettagliata su come fare al link http://www.megalab.it/7090/come-generare-certificati-digitali-con-openssl-windows-e-linux.
 
 Inserisci il file di certificato nella cartella cert, rinominandolo certfile.pem, e nella stessa cartella il file della chiave privata, rinominandolo key.pem; Se hai completato tutti i passi correttamente, puoi eseguire server.py .
-Partirà il server TCP per l'esecuzione di comandi e contemporaneamente il server FTP over TLS. Il server mostrerà a schermo la chiave crittografica di sessione, dovrai inserirla nel client prima di connetterti al server per permettere una comunicazione sicura tra il server e il client.
+
+**Attenzione** Se dovesse spuntare una finestra con un messaggio simile a "Consentire a Python di accettare le connessioni in entrata?" cliccare su 'Si' o in ogni caso consentire al firewall di far accettare richieste esterne alla rete locale.
+
+Se hai seguito tutti i passi correttamente, partirà il server TCP per l'esecuzione di comandi e contemporaneamente il server FTP over TLS. Il server mostrerà a schermo la chiave crittografica di sessione, dovrai inserirla nel client prima di connetterti al server per permettere una comunicazione sicura tra il server e il client.
 
 **N.B. 2** Nella repository sono già presenti una chiave privata ed un certificato di esempio, ma è **vivamente sconsigliato utilizzarli** in quanto si perderebbe il senso di utilizzare una connessione TLS.
 
